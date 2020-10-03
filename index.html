@@ -115,14 +115,48 @@
                         <p class="text-sm">{{ result.comments }} comments</p>
                     </a>
                 </div>
-
-                <div v-if="showViewMore" class="flex items-center justify-center my-6">
+                <div v-if="!isFetching && results.length === 0" class="flex items-center justify-center">
+                    No results
+                </div>
+                <div v-if="isFetching" class="flex items-center justify-center py-12"> 
+                    <svg class="stroke-current fill-current text-hacktoberfest-orange" xmlns="http://www.w3.org/2000/svg" width="58" height="58" viewBox="0 0 58 58">
+                        <g fill="none" fill-rule="evenodd">
+                            <g transform="translate(2 1)" stroke-width="1.5">
+                                <circle cx="42.601" cy="11.462" r="5" fill-opacity="1" class="fill-current text-hacktoberfest-orange">
+                                    <animate attributeName="fill-opacity" begin="0s" dur="1.3s" values="1;0;0;0;0;0;0;0" calcMode="linear" repeatCount="indefinite"/>
+                                </circle>
+                                <circle cx="49.063" cy="27.063" r="5" fill-opacity="0" class="fill-current text-hacktoberfest-orange">
+                                    <animate attributeName="fill-opacity" begin="0s" dur="1.3s" values="0;1;0;0;0;0;0;0" calcMode="linear" repeatCount="indefinite"/>
+                                </circle>
+                                <circle cx="42.601" cy="42.663" r="5" fill-opacity="0" class="fill-current text-hacktoberfest-orange">
+                                    <animate attributeName="fill-opacity" begin="0s" dur="1.3s" values="0;0;1;0;0;0;0;0" calcMode="linear" repeatCount="indefinite"/>
+                                </circle>
+                                <circle cx="27" cy="49.125" r="5" fill-opacity="0" class="fill-current text-hacktoberfest-orange">
+                                    <animate attributeName="fill-opacity" begin="0s" dur="1.3s" values="0;0;0;1;0;0;0;0" calcMode="linear" repeatCount="indefinite"/>
+                                </circle>
+                                <circle cx="11.399" cy="42.663" r="5" fill-opacity="0" class="fill-current text-hacktoberfest-orange">
+                                    <animate attributeName="fill-opacity" begin="0s" dur="1.3s" values="0;0;0;0;1;0;0;0" calcMode="linear" repeatCount="indefinite"/>
+                                </circle>
+                                <circle cx="4.938" cy="27.063" r="5" fill-opacity="0" class="fill-current text-hacktoberfest-orange">
+                                    <animate attributeName="fill-opacity" begin="0s" dur="1.3s" values="0;0;0;0;0;1;0;0" calcMode="linear" repeatCount="indefinite"/>
+                                </circle>
+                                <circle cx="11.399" cy="11.462" r="5" fill-opacity="0" class="fill-current text-hacktoberfest-orange">
+                                    <animate attributeName="fill-opacity" begin="0s" dur="1.3s" values="0;0;0;0;0;0;1;0" calcMode="linear" repeatCount="indefinite"/>
+                                </circle>
+                                <circle cx="27" cy="5" r="5" fill-opacity="0" class="fill-current text-hacktoberfest-orange">
+                                    <animate attributeName="fill-opacity" begin="0s" dur="1.3s" values="0;0;0;0;0;0;0;1" calcMode="linear" repeatCount="indefinite"/>
+                                </circle>
+                            </g>
+                        </g>
+                    </svg>
+                </div>
+                <div v-if="showViewMore && !isFetching" class="flex items-center justify-center my-6">
                     <button
                         class="bg-hacktoberfest-blue hover:bg-hacktoberfest-orange text-white rounded-full px-6 py-3 uppercase font-medium"
-                        :disabled="isFetching"
+                        :disabled="isFetching || results.length < 30"
                         @click="loadIssues"
                     >
-                        {{ isFetching ? 'Loading' : 'Load More' }}
+                        Load More
                     </button>
                 </div>
             </div>

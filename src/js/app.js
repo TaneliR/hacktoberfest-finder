@@ -57,11 +57,15 @@ new Vue({
                         })
                     )
 
-                    this.results = [...this.results, ...newResults]
-
-                    this.page = this.page + 1
-                    this.showViewMore = true
-                    this.isFetching = false
+                    // Slight delay on showing the results to get rid of "flickering" feeling on really quick searches
+                    setTimeout(() => {
+                        this.isFetching = false;
+                        this.results = [...this.results, ...newResults]
+                        this.page = this.page + 1
+                        if (this.results.length >= 30) {
+                            this.showViewMore = true
+                        }
+                    }, 200)
 
                     if (issuesResponse.items.length === 0) {
                         // case when all the issues are already loaded
